@@ -44,6 +44,16 @@ function plannedIssueUrl(course) {
   return newIssueUrl(`[参加予定] ${course.no}: ${course.title}`, body);
 }
 
+function iconChangeIssueUrl() {
+  const body = [
+    "--- 次の行の直後に、新しいアイコン画像をドラッグ&ドロップ(またはペースト)してから投稿してください ---",
+    "(正方形に近い画像がおすすめです)",
+    "",
+    "",
+  ].join("\n");
+  return newIssueUrl("[アイコン変更]", body);
+}
+
 function settingsIssueUrl(changes) {
   const lines = ["--- 変更したい設定だけ残してそのまま投稿してください ---", ""];
   for (const [key, value] of Object.entries(changes)) {
@@ -205,6 +215,7 @@ function setupTabs() {
 
 async function main() {
   setupTabs();
+  document.getElementById("icon-change-link").href = iconChangeIssueUrl();
   try {
     const resp = await fetch(DATA_URL, { cache: "no-store" });
     const data = await resp.json();

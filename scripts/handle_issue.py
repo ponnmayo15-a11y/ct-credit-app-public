@@ -8,10 +8,13 @@ GitHub Actionsの `issues: opened` イベントから呼ばれる想定。
 失敗時はexit code 1で終了し、Issueはクローズしない(人の目での確認に回す)。
 """
 import datetime
+import io
 import json
 import os
 import re
 import sys
+
+import requests
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -19,6 +22,11 @@ from ct_credit_research import calendar_client, db, export_json, main as main_mo
 
 COURSE_NO_RE = re.compile(r"course_no:\s*(\d+)")
 SETTINGS_LINE_RE = re.compile(r"^([a-z_]+)=(.*)$")
+ATTACHMENT_IMAGE_RE = re.compile(
+    r"!\[[^\]]*\]\((https://(?:github\.com/user-attachments/assets/[^)\s]+"
+    r"|(?:private-)?user-images\.githubusercontent\.com/[^)\s]+))\)"
+)
+ICON_SIZES = (512, 192, 180, 32)
 
 
 def handle_participation_check(body: str) -> str:
@@ -161,6 +169,47 @@ def handle_settings_change(body: str) -> str:
     return result
 
 
+def handle_icon_change(body: str) -> str:
+    from PIL import Image
+
+    match = ATTACHMENT_IMAGE_RE.search(body)
+    if not match:
+        print(
+            "本文から画像が見つかりませんでした。Issue本文に画像をドラッグ&ドロップ(またはペースト)してから投稿してください",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    image_url = match.group(1)
+
+    try:
+        resp = requests.get(image_url, timeout=30)
+        resp.raise_for_status()
+    except Exception as exc:  # noqa: BLE001
+        print(f"画像のダウンロードに失敗しました: {exc}", file=sys.stderr)
+        sys.exit(1)
+
+    try:
+        img = Image.open(io.BytesIO(resp.content)).convert("RGB")
+    except Exception as exc:  # noqa: BLE001
+        print(f"画像として読み込めませんでした: {exc}", file=sys.stderr)
+        sys.exit(1)
+
+    # 正方形でなければ中央を正方形に切り抜く
+    w, h = img.size
+    if w != h:
+        side = min(w, h)
+        left = (w - side) // 2
+        top = (h - side) // 2
+        img = img.crop((left, top, left + side, top + side))
+
+    docs_dir = os.path.join(main_mod.BASE_DIR, "docs")
+    for size in ICON_SIZES:
+        resized = img.resize((size, size), Image.LANCZOS)
+        resized.save(os.path.join(docs_dir, f"icon-{size}.png"))
+
+    return "アプリのアイコンを更新しました。反映までに数分かかることがあります。"
+
+
 def main() -> None:
     with open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8") as f:
         event = json.load(f)
@@ -173,8 +222,13 @@ def main() -> None:
         result = handle_mark_planned(body)
     elif "[設定変更]" in title:
         result = handle_settings_change(body)
+    elif "[アイコン変更]" in title:
+        result = handle_icon_change(body)
     else:
-        print("対象外のIssueです(タイトルに [参加チェック] / [参加予定] / [設定変更] を含みません)", file=sys.stderr)
+        print(
+            "対象外のIssueです(タイトルに [参加チェック] / [参加予定] / [設定変更] / [アイコン変更] を含みません)",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     print(result)

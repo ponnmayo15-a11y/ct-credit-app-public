@@ -22,9 +22,12 @@ from ct_credit_research import calendar_client, db, export_json, main as main_mo
 
 COURSE_NO_RE = re.compile(r"course_no:\s*(\d+)")
 SETTINGS_LINE_RE = re.compile(r"^([a-z_]+)=(.*)$")
+# GitHubは添付画像を投稿元によってMarkdown形式 `![alt](url)` と
+# HTML形式 `<img ... src="url" ...>` のどちらでも埋め込む(モバイルの「Add Files」は
+# 主にHTML形式になる)。両方に対応する。
+_ATTACHMENT_HOST = r"https://(?:github\.com/user-attachments/assets/[^)\s\"'>]+|(?:private-)?user-images\.githubusercontent\.com/[^)\s\"'>]+)"
 ATTACHMENT_IMAGE_RE = re.compile(
-    r"!\[[^\]]*\]\((https://(?:github\.com/user-attachments/assets/[^)\s]+"
-    r"|(?:private-)?user-images\.githubusercontent\.com/[^)\s]+))\)"
+    rf"(?:!\[[^\]]*\]\(({_ATTACHMENT_HOST})\)|<img[^>]*\ssrc=[\"']({_ATTACHMENT_HOST})[\"'])"
 )
 ICON_SIZES = (512, 192, 180, 32)
 
@@ -179,7 +182,7 @@ def handle_icon_change(body: str) -> str:
             file=sys.stderr,
         )
         sys.exit(1)
-    image_url = match.group(1)
+    image_url = match.group(1) or match.group(2)
 
     try:
         resp = requests.get(image_url, timeout=30)

@@ -2,24 +2,21 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
 <title>CT認定技師 単位講習会リサーチ</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="app-header">
-  <h1>CT認定技師 単位講習会リサーチ</h1>
-  <p class="updated-at" id="updated-at"></p>
+  <div class="app-header-inner">
+    <div class="app-icon" aria-hidden="true">🩻</div>
+    <div class="app-header-text">
+      <h1>CT単位講習会</h1>
+      <p class="updated-at" id="updated-at"></p>
+    </div>
+  </div>
 </header>
-
-<nav class="tabs" id="tabs">
-  <button class="tab-btn active" data-tab="summary">概要</button>
-  <button class="tab-btn" data-tab="main">対象講習会リスト</button>
-  <button class="tab-btn" data-tab="manual">要確認</button>
-  <button class="tab-btn" data-tab="planned">参加予定</button>
-  <button class="tab-btn" data-tab="history">参加履歴</button>
-  <button class="tab-btn" data-tab="settings">設定</button>
-</nav>
 
 <main>
   <section id="tab-summary" class="tab-panel active">
@@ -33,16 +30,19 @@
   </section>
 
   <section id="tab-main" class="tab-panel">
+    <h2 class="section-title">対象講習会リスト</h2>
     <p class="note">条件に合致した講習会です。開催日が近い順に並んでいます。</p>
     <div id="main-list" class="course-list"></div>
   </section>
 
   <section id="tab-manual" class="tab-panel">
+    <h2 class="section-title">要確認</h2>
     <p class="note">自動判定できず、人の目でのチェックが必要な講習会です。詳細PDFを確認してください。</p>
     <div id="manual-list" class="course-list"></div>
   </section>
 
   <section id="tab-planned" class="tab-panel">
+    <h2 class="section-title">参加予定</h2>
     <p class="note">
       「参加予定にする」を押した講習会です。実際に参加したら「参加した」ボタンを押してください
       (カレンダー登録・参加履歴への記録が自動で行われます)。
@@ -51,21 +51,50 @@
   </section>
 
   <section id="tab-history" class="tab-panel">
+    <h2 class="section-title">参加履歴</h2>
     <div id="history-list"></div>
   </section>
 
   <section id="tab-settings" class="tab-panel">
+    <h2 class="section-title">設定</h2>
     <p class="note">
       値を変更して「設定変更をリクエスト」を押すとGitHubの新規Issue作成画面が開きます。そのまま投稿すると、
       次回の週次リサーチから新しい条件が適用されます。
     </p>
     <form id="settings-form"></form>
   </section>
+
+  <p class="app-footer-note">
+    データソース: <a href="https://www.ct-ninteikikou.jp/nintei/tani_nintei_list/" target="_blank" rel="noopener">日本X線CT専門技師認定機構「単位認定講習会等一覧」</a>
+  </p>
 </main>
 
-<footer class="app-footer">
-  <p>データソース: <a href="https://www.ct-ninteikikou.jp/nintei/tani_nintei_list/" target="_blank" rel="noopener">日本X線CT専門技師認定機構「単位認定講習会等一覧」</a></p>
-</footer>
+<nav class="tab-bar" id="tabs">
+  <button class="tab-btn active" data-tab="summary">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1v-9"/></svg>
+    <span>概要</span>
+  </button>
+  <button class="tab-btn" data-tab="main">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+    <span>講習会</span>
+  </button>
+  <button class="tab-btn" data-tab="manual">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 2.5 17.5A1.8 1.8 0 0 0 4 20h16a1.8 1.8 0 0 0 1.5-2.5L13.7 3.9a1.8 1.8 0 0 0-3.4 0Z"/></svg>
+    <span>要確認</span>
+  </button>
+  <button class="tab-btn" data-tab="planned">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 2.5v4"/><path d="M16 2.5v4"/><path d="m8.5 14 2 2 4-4"/></svg>
+    <span>参加予定</span>
+  </button>
+  <button class="tab-btn" data-tab="history">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+    <span>履歴</span>
+  </button>
+  <button class="tab-btn" data-tab="settings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.4 7.4 0 0 0-1.7-1L15 3h-4l-.3 2.6a7.4 7.4 0 0 0-1.7 1l-2.4-1-2 3.4L6.6 11a7.6 7.6 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.4 7.4 0 0 0 1.7 1L11 21h4l.3-2.6a7.4 7.4 0 0 0 1.7-1l2.4 1 2-3.4Z"/></svg>
+    <span>設定</span>
+  </button>
+</nav>
 
 <script src="app.js"></script>
 </body>

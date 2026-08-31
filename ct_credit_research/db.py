@@ -264,6 +264,17 @@ def set_planned(conn: sqlite3.Connection, course_no: int) -> dict | None:
     return dict(row)
 
 
+def unset_planned(conn: sqlite3.Connection, course_no: int) -> dict | None:
+    row = conn.execute("SELECT * FROM courses WHERE no = ?", (course_no,)).fetchone()
+    if row is None:
+        return None
+    conn.execute(
+        "UPDATE courses SET planned = 0, planned_at = NULL WHERE no = ?",
+        (course_no,),
+    )
+    return dict(row)
+
+
 def add_run_log(conn: sqlite3.Connection, scanned: int, included: int, manual_check: int, last_processed_no: int) -> None:
     conn.execute(
         "INSERT INTO run_log (run_at, scanned, included, manual_check, last_processed_no) VALUES (?, ?, ?, ?, ?)",

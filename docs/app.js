@@ -44,6 +44,17 @@ function plannedIssueUrl(course) {
   return newIssueUrl(`[参加予定] ${course.no}: ${course.title}`, body);
 }
 
+function unplannedIssueUrl(course) {
+  const body = [
+    `course_no: ${course.no}`,
+    "",
+    "--- 以下は自動生成された内容です。編集せずそのまま投稿してください ---",
+    `講習会名: ${course.title}`,
+    `開催日: ${course.event_date}`,
+  ].join("\n");
+  return newIssueUrl(`[参加予定取消] ${course.no}: ${course.title}`, body);
+}
+
 function iconChangeIssueUrl() {
   const body = [
     "--- 次の行の直後に、新しいアイコン画像をドラッグ&ドロップ(またはペースト)してから投稿してください ---",
@@ -78,20 +89,23 @@ function courseCard(course, variant = "browse") {
     course.fee_display ? el("span", { class: "badge" }, `参加費: ${course.fee_display}`) : null,
   ]);
 
-  let actionButton;
+  let actionButtons;
   if (course.attended) {
-    actionButton = el("span", { class: "attended-tag" }, "✓ 参加済み");
+    actionButtons = [el("span", { class: "attended-tag" }, "✓ 参加済み")];
   } else if (variant === "planned") {
-    actionButton = el("a", { class: "btn primary", href: participationIssueUrl(course), target: "_blank", rel: "noopener" }, "参加した");
+    actionButtons = [
+      el("a", { class: "btn", href: unplannedIssueUrl(course), target: "_blank", rel: "noopener" }, "参加しない"),
+      el("a", { class: "btn primary", href: participationIssueUrl(course), target: "_blank", rel: "noopener" }, "参加した"),
+    ];
   } else if (course.planned) {
-    actionButton = el("span", { class: "planned-tag" }, "予定としてマーク済み");
+    actionButtons = [el("span", { class: "planned-tag" }, "予定としてマーク済み")];
   } else {
-    actionButton = el("a", { class: "btn primary", href: plannedIssueUrl(course), target: "_blank", rel: "noopener" }, "参加予定にする");
+    actionButtons = [el("a", { class: "btn primary", href: plannedIssueUrl(course), target: "_blank", rel: "noopener" }, "参加予定にする")];
   }
 
   const actions = el("div", { class: "course-actions" }, [
     course.pdf_url ? el("a", { class: "btn", href: course.pdf_url, target: "_blank", rel: "noopener" }, "詳細PDF") : null,
-    actionButton,
+    ...actionButtons,
   ]);
 
   return el("div", { class: `course-card${course.attended ? " attended" : ""}` }, [

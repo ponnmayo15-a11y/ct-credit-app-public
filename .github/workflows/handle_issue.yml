@@ -11,7 +11,7 @@ permissions:
 jobs:
   handle:
     if: |
-      contains(github.event.issue.title, '[参加チェック]') || contains(github.event.issue.title, '[参加予定]') || contains(github.event.issue.title, '[設定変更]') || contains(github.event.issue.title, '[アイコン変更]')
+      contains(github.event.issue.title, '[参加チェック]') || contains(github.event.issue.title, '[参加予定]') || contains(github.event.issue.title, '[参加予定取消]') || contains(github.event.issue.title, '[設定変更]') || contains(github.event.issue.title, '[アイコン変更]')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

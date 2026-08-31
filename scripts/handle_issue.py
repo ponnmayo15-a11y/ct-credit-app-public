@@ -86,6 +86,28 @@ def handle_mark_planned(body: str) -> str:
     return f"No.{course_no}「{course['title']}」を参加予定にしました。"
 
 
+def handle_unmark_planned(body: str) -> str:
+    match = COURSE_NO_RE.search(body)
+    if not match:
+        print("course_noが本文から見つかりませんでした", file=sys.stderr)
+        sys.exit(1)
+    course_no = int(match.group(1))
+
+    with db.connect(main_mod.DB_PATH) as conn:
+        course = db.unset_planned(conn, course_no)
+        if course is None:
+            print(f"No.{course_no} の講習会がデータベースに見つかりません", file=sys.stderr)
+            sys.exit(1)
+
+        cfg = main_mod.load_config()
+        cfg.update(db.get_settings(conn))
+        export_cfg = {k: v for k, v in cfg.items() if k != "home_weekday_evening_start_time"}
+        export_data = export_json.build_export(conn, export_cfg)
+        export_json.write_export(main_mod.EXPORT_PATH, export_data)
+
+    return f"No.{course_no}「{course['title']}」の参加予定を取り消しました。"
+
+
 def sync_calendar_event(course: dict) -> str:
     calendar_id = os.environ.get("CT_CALENDAR_ID", "primary")
     try:
@@ -221,6 +243,8 @@ def main() -> None:
 
     if "[参加チェック]" in title:
         result = handle_participation_check(body)
+    elif "[参加予定取消]" in title:
+        result = handle_unmark_planned(body)
     elif "[参加予定]" in title:
         result = handle_mark_planned(body)
     elif "[設定変更]" in title:
@@ -229,7 +253,7 @@ def main() -> None:
         result = handle_icon_change(body)
     else:
         print(
-            "対象外のIssueです(タイトルに [参加チェック] / [参加予定] / [設定変更] / [アイコン変更] を含みません)",
+            "対象外のIssueです(タイトルに [参加チェック] / [参加予定] / [参加予定取消] / [設定変更] / [アイコン変更] を含みません)",
             file=sys.stderr,
         )
         sys.exit(1)

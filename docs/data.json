@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-01T04:23:59",
+  "generated_at": "2026-09-04T08:07:54",
   "main_list": [
     {
       "no": 3491,
@@ -22,8 +22,8 @@
       "list_type": "main",
       "attended": 0,
       "attended_at": null,
-      "planned": 1,
-      "planned_at": "2026-09-01T04:23:59"
+      "planned": 0,
+      "planned_at": null
     },
     {
       "no": 3488,
@@ -436,32 +436,7 @@
       "planned_at": null
     }
   ],
-  "planned_list": [
-    {
-      "no": 3491,
-      "title": "第4回FUJIFILM CT User's meeting ～FCT core Link～",
-      "event_date": "2026-09-02",
-      "weekday": "水",
-      "start_time": "18:30",
-      "end_time": "20:30",
-      "category": "Ⅱ-3",
-      "points": 1,
-      "duration": "半日未満",
-      "mode": "online",
-      "prefecture": "",
-      "fee": 0,
-      "fee_display": "無料",
-      "reason": "オンライン開催・参加費0円",
-      "pdf_url": "https://www.ct-ninteikikou.jp/nintei/tani_nintei_list/pdf/03491.pdf",
-      "source_url": "https://www.ct-ninteikikou.jp/nintei/tani_nintei_list/",
-      "added_date": "2026-08-11",
-      "list_type": "main",
-      "attended": 0,
-      "attended_at": null,
-      "planned": 1,
-      "planned_at": "2026-09-01T04:23:59"
-    }
-  ],
+  "planned_list": [],
   "settings": [
     {
       "key": "online_fee_max_yen",
@@ -562,9 +537,9 @@
     ],
     "total_points": 13,
     "renewal_period_end": "2030/03/31",
-    "renewal_days_remaining": 1307,
+    "renewal_days_remaining": 1304,
     "credit_target_date": "2029/03/31",
-    "credit_target_days_remaining": 942
+    "credit_target_days_remaining": 939
   },
   "run_log": [
     {

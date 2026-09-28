@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-21T00:23:39",
+  "generated_at": "2026-09-28T01:00:24",
   "main_list": [
     {
       "no": 3502,
@@ -340,30 +340,6 @@
   ],
   "manual_list": [
     {
-      "no": 3533,
-      "title": "40th CBRM web Seminar",
-      "event_date": "2026-09-25",
-      "weekday": "金",
-      "start_time": "19:00",
-      "end_time": "20:30",
-      "category": "Ⅱ-3",
-      "points": 1,
-      "duration": "半日未満",
-      "mode": "unknown",
-      "prefecture": "",
-      "fee": null,
-      "fee_display": "",
-      "reason": "開催形式・開催地が特定できないため要確認",
-      "pdf_url": "https://www.ct-ninteikikou.jp/nintei/tani_nintei_list/pdf/03533.pdf",
-      "source_url": "https://www.ct-ninteikikou.jp/nintei/tani_nintei_list/",
-      "added_date": "2026-09-14",
-      "list_type": "manual",
-      "attended": 0,
-      "attended_at": null,
-      "planned": 0,
-      "planned_at": null
-    },
-    {
       "no": 3531,
       "title": "第179回Tokyo CT Technology Seminar",
       "event_date": "2026-09-30",
@@ -633,11 +609,19 @@
     ],
     "total_points": 13,
     "renewal_period_end": "2030/03/31",
-    "renewal_days_remaining": 1287,
+    "renewal_days_remaining": 1280,
     "credit_target_date": "2029/03/31",
-    "credit_target_days_remaining": 922
+    "credit_target_days_remaining": 915
   },
   "run_log": [
+    {
+      "id": 10,
+      "run_at": "2026-09-28T01:00:24",
+      "scanned": 0,
+      "included": 0,
+      "manual_check": 0,
+      "last_processed_no": 3547
+    },
     {
       "id": 9,
       "run_at": "2026-09-21T00:23:39",

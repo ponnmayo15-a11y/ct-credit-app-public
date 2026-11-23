@@ -1,30 +1,6 @@
 {
-  "generated_at": "2026-11-16T02:19:12",
+  "generated_at": "2026-11-23T02:56:47",
   "main_list": [
-    {
-      "no": 3606,
-      "title": "2026年度九州撮影コミュニティセミナー",
-      "event_date": "2026-11-17",
-      "weekday": "火",
-      "start_time": "18:30",
-      "end_time": "20:30",
-      "category": "Ⅱ-2",
-      "points": 2,
-      "duration": "半日未満",
-      "mode": "online",
-      "prefecture": "",
-      "fee": 0,
-      "fee_display": "無料/500円/1000円",
-      "reason": "オンライン開催・参加費0円",
-      "pdf_url": "https://www.ct-ninteikikou.jp/nintei/tani_nintei_list/pdf/03606.pdf",
-      "source_url": "https://www.ct-ninteikikou.jp/nintei/tani_nintei_list/",
-      "added_date": "2026-11-16",
-      "list_type": "main",
-      "attended": 0,
-      "attended_at": null,
-      "planned": 0,
-      "planned_at": null
-    },
     {
       "no": 3583,
       "title": "第180回Tokyo CT Technology Seminar",
@@ -388,30 +364,6 @@
   ],
   "manual_list": [
     {
-      "no": 3595,
-      "title": "第66回X線CT研究会",
-      "event_date": "2026-11-21",
-      "weekday": "土",
-      "start_time": "13:30",
-      "end_time": "17:00",
-      "category": "Ⅱ-3",
-      "points": 3,
-      "duration": "半日",
-      "mode": "",
-      "prefecture": "",
-      "fee": null,
-      "fee_display": "",
-      "reason": "詳細PDFが掲載されていないため要確認",
-      "pdf_url": "",
-      "source_url": "https://www.ct-ninteikikou.jp/nintei/tani_nintei_list/",
-      "added_date": "2026-11-16",
-      "list_type": "manual",
-      "attended": 0,
-      "attended_at": null,
-      "planned": 0,
-      "planned_at": null
-    },
-    {
       "no": 3545,
       "title": "大阪府下公立病院放射線技師会第76回学術研修会",
       "event_date": "2026-11-28",
@@ -657,11 +609,19 @@
     ],
     "total_points": 13,
     "renewal_period_end": "2030/03/31",
-    "renewal_days_remaining": 1231,
+    "renewal_days_remaining": 1224,
     "credit_target_date": "2029/03/31",
-    "credit_target_days_remaining": 866
+    "credit_target_days_remaining": 859
   },
   "run_log": [
+    {
+      "id": 18,
+      "run_at": "2026-11-23T02:56:47",
+      "scanned": 0,
+      "included": 0,
+      "manual_check": 0,
+      "last_processed_no": 3611
+    },
     {
       "id": 17,
       "run_at": "2026-11-16T02:19:12",
@@ -733,14 +693,6 @@
       "included": 4,
       "manual_check": 1,
       "last_processed_no": 3547
-    },
-    {
-      "id": 8,
-      "run_at": "2026-09-14T00:19:54",
-      "scanned": 8,
-      "included": 3,
-      "manual_check": 3,
-      "last_processed_no": 3538
     }
   ]
 }
